@@ -31,7 +31,8 @@ The files have to be used in sequence to create the stacks, because they depend 
 1. Picnic-VPC-broken
 2. Picnic-NAT-Gateways-broken.yaml  
 3. Picnic-BastionHost.yaml  
-4. Picnic-EC2-broken.yaml   
+4. Picnic-EC2-broken.yaml  
+
 Please don't read the files otherwise you could understand what's broken in the architecture. 
 
 # Objectives
