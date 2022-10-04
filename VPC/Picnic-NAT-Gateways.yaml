@@ -30,7 +30,7 @@ Resources:
     Type: 'AWS::EC2::NatGateway'
     Properties:
       AllocationId: !GetAtt EIPC.AllocationId
-      SubnetId: !ImportValue picnic-vpc1-subnet-webb
+      SubnetId: !ImportValue picnic-vpc1-subnet-webc
   RouteTablePrivateA: 
     Type: 'AWS::EC2::RouteTable'
     Properties:
