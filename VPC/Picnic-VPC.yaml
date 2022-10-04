@@ -29,28 +29,78 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       InternetGatewayId: !Ref InternetGateway
-  RouteTableWeb: 
+  RouteTableWebA: 
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref VPC
       Tags:
       - Key: Name
-        Value: picnic-vpc1-rt-web
-  RouteTableWebDefaultIPv4: 
+        Value: picnic-vpc1-rt-web-a
+  RouteTableWebB: 
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: picnic-vpc1-rt-web-b
+  RouteTableWebC: 
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: picnic-vpc1-rt-web-c
+  RouteTableWebDefaultIPv4A: 
     Type: 'AWS::EC2::Route'
     DependsOn: InternetGatewayAttachment
     Properties:
       RouteTableId:
-        Ref: RouteTableWeb
+        Ref: RouteTableWebA
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId:
         Ref: InternetGateway
-  RouteTableWebDefaultIPv6: 
+  RouteTableWebDefaultIPv4B: 
     Type: 'AWS::EC2::Route'
     DependsOn: InternetGatewayAttachment
     Properties:
       RouteTableId:
-        Ref: RouteTableWeb
+        Ref: RouteTableWebB
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId:
+        Ref: InternetGateway
+  RouteTableWebDefaultIPv4C: 
+    Type: 'AWS::EC2::Route'
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId:
+        Ref: RouteTableWebC
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId:
+        Ref: InternetGateway
+  RouteTableWebDefaultIPv6A: 
+    Type: 'AWS::EC2::Route'
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId:
+        Ref: RouteTableWebA
+      DestinationIpv6CidrBlock: '::/0'
+      GatewayId:
+        Ref: InternetGateway
+  RouteTableWebDefaultIPv6B: 
+    Type: 'AWS::EC2::Route'
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId:
+        Ref: RouteTableWebB
+      DestinationIpv6CidrBlock: '::/0'
+      GatewayId:
+        Ref: InternetGateway
+  RouteTableWebDefaultIPv6C: 
+    Type: 'AWS::EC2::Route'
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId:
+        Ref: RouteTableWebC
       DestinationIpv6CidrBlock: '::/0'
       GatewayId:
         Ref: InternetGateway
@@ -59,19 +109,19 @@ Resources:
     Properties:
       SubnetId: !Ref SubnetWEBA
       RouteTableId:
-        Ref: RouteTableWeb
+        Ref: RouteTableWebA
   RouteTableAssociationWebB:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
       SubnetId: !Ref SubnetWEBB
       RouteTableId:
-        Ref: RouteTableWeb
+        Ref: RouteTableWebB
   RouteTableAssociationWebC:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
       SubnetId: !Ref SubnetWEBC
       RouteTableId:
-        Ref: RouteTableWeb
+        Ref: RouteTableWebC
   SubnetReservedA:
     Type: AWS::EC2::Subnet
     DependsOn: IPv6CidrBlock
