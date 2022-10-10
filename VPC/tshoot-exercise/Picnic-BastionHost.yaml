@@ -1,4 +1,3 @@
-
 Description:  This template is intended to be the skeleton template VPC.
 Parameters:
   LatestAmiId:
@@ -22,6 +21,15 @@ Resources:
       Tags:
         - Key: Name
           Value: picnic-BASTION
+      UserData: 
+        Fn::Base64: 
+          !Sub |
+            #!/bin/bash 
+            yum install -y awscli
+            hostnamectl set-hostname bastion
+            aws secretsmanager get-secret-value --secret-id ssh-key-tshoot-exercise --query SecretString --output text --region us-east-1 >> /home/ec2-user/aws-training-picnic.pem
+            chmown ec2-user:ec2-user /home/ec2-user/aws-training-picnic.pem 
+            chmod 400 /home/ec2-user/aws-training-picnic.pem
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -90,6 +98,47 @@ Resources:
                   - 'ec2messages:GetMessages'
                   - 'ec2messages:SendReply'
                 Resource: '*'
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:*"
+                  - "cloudformation:CreateChangeSet"
+                  - "cloudformation:DescribeChangeSet"
+                  - "cloudformation:DescribeStackResource"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:ExecuteChangeSet"
+                  - "ec2:DescribeSecurityGroups"
+                  - "ec2:DescribeSubnets"
+                  - "ec2:DescribeVpcs"
+                  - "kms:DescribeKey"
+                  - "kms:ListAliases"
+                  - "kms:ListKeys"
+                  - "lambda:ListFunctions"
+                  - "rds:DescribeDBClusters"
+                  - "rds:DescribeDBInstances"
+                  - "redshift:DescribeClusters"
+                  - "tag:GetResources"
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - "lambda:AddPermission"
+                  - "lambda:CreateFunction"
+                  - "lambda:GetFunction"
+                  - "lambda:InvokeFunction"
+                  - "lambda:UpdateFunctionConfiguration"
+                Resource: 'arn:aws:lambda:*:*:function:SecretsManager*'
+              - Effect: Allow
+                Action: 
+                  - "serverlessrepo:CreateCloudFormationChangeSet"
+                  - "serverlessrepo:GetApplication"
+                Resource: "arn:aws:serverlessrepo:*:*:applications/SecretsManager*"
+              - Effect: Allow
+                Action: 
+                  - "s3:GetObject"
+                Resource: "arn:aws:s3:::awsserverlessrepo-changesets*"
+              - Effect: Allow
+                Action:
+                  - "s3:GetObject"
+                Resource: "arn:aws:s3:::secrets-manager-rotation-apps-*/*"  
   SessionManagerInstanceProfile:
     Type: 'AWS::IAM::InstanceProfile'
     Properties:
