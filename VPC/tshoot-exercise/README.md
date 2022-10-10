@@ -16,7 +16,7 @@ sudo su - ec2-user
 ```
 From there, you can simply SSH into the private EC2 instances:
 ```bash
-ssh ec2-user@private-ip-ec2
+ssh -i aws-training-picnic.pem <private-ip-ec2>
 ```
 
 # Usage
