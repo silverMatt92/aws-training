@@ -1,3 +1,5 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
 Description:  This template is deploying six EC2 private instances. It requires the VPC skeleton in the same folder.
 Parameters:
   LatestAmiId:
