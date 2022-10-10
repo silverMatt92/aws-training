@@ -8,17 +8,11 @@ Skills required:
 - NACLs;  
   
 # Pre-requisites
-An SSH key pair has to be available or created in us-east-1 AWS region.  
-Download the private key .pem file and modify the permission as per documentation:  
-https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html  
-
-It's also easier to set up SSH forwarding to access the private EC2 instances via the Bastion.  
+There's already an SSH key pair created, called aws-training-picnic and this key is automatically 
+added to the bastion host under /home/ec2-user directory.
+From the bastion, first switch to the ec2-user:
 ```bash
-ssh-add -K name-of-your-key.pem
-```
-SSH into the Bastion host:
-```bash
-ssh ec2-user@public-ip-bastion
+sudo su - ec2-user
 ```
 From there, you can simply SSH into the private EC2 instances:
 ```bash
@@ -30,8 +24,9 @@ The yaml CloudFormation files deploy the architecture for you. A reference pictu
 The files have to be used in sequence to create the stacks, because they depend on each other:  
 1. Picnic-VPC-broken.yaml
 2. Picnic-NAT-Gateways-broken.yaml  
-3. Picnic-BastionHost.yaml  
-4. Picnic-EC2-broken.yaml  
+3. Picnic-NACLS-broken.yaml
+4. Picnic-BastionHost.yaml  
+5. Picnic-EC2-broken.yaml  
 
 Please don't read the files otherwise you could understand what's broken in the architecture. 
 
