@@ -1,3 +1,4 @@
+---
 AWSTemplateFormatVersion: 2010-09-09
 Description:  Adds NATGateway functionality to private subnets of the Picnic VPC, broken for tshoot exercise
   Requires the Picnic-VPC template to function - imports values from that template
