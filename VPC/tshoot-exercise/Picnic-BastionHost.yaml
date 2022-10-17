@@ -30,7 +30,7 @@ Resources:
             yum install -y awscli
             hostnamectl set-hostname bastion
             aws secretsmanager get-secret-value --secret-id ssh-key-tshoot-exercise --query SecretString --output text --region us-east-1 >> /home/ec2-user/aws-training-picnic.pem
-            chmown ec2-user:ec2-user /home/ec2-user/aws-training-picnic.pem 
+            chown ec2-user:ec2-user /home/ec2-user/aws-training-picnic.pem 
             chmod 400 /home/ec2-user/aws-training-picnic.pem
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
