@@ -31,7 +31,8 @@ The files have to be used in sequence to create the stacks, because they depend 
 4. Picnic-BastionHost.yaml  
 5. Picnic-EC2-broken.yaml  
 
-Please don't read the files otherwise you could understand what's broken in the architecture. 
+Please don't read the files otherwise you could understand what's broken in the architecture.  
+Once done, remember to delete the stacks in the opposite order w/r of their creation, to avoid paying for something you don't use.
 
 # Objectives
 The architecture is broken, solve the issues and make the followings working:  
