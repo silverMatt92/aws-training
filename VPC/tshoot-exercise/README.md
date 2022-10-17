@@ -21,6 +21,9 @@ ssh -i aws-training-picnic.pem <private-ip-ec2>
 
 # Usage
 The yaml CloudFormation files deploy the architecture for you. A reference picture is provided. Use it in us-east-1 region.  
+Consder that, due to limitation in AWS Elastic IP number (5 per account per region) it won't be possible to launch the templates 
+if someone else already deployed it.
+Please check if any stack is already deployed before attampting to create them. 
 The files have to be used in sequence to create the stacks, because they depend on each other:  
 1. Picnic-VPC-broken.yaml
 2. Picnic-NAT-Gateways-broken.yaml  
