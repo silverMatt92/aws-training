@@ -37,4 +37,4 @@ Please don't read the files otherwise you could understand what's broken in the 
 The architecture is broken, solve the issues and make the followings working:  
 1. Confirm the private EC2 instances are being natted with the EIP of the related NAT Gateways;  
 2. Ping google.com from both private EC2 in each Availability Zone;  
-3. Ping between the two EC2 instances in each Availability Zone.
+3. Ping between every EC2 instances.
