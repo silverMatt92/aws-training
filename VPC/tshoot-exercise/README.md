@@ -24,7 +24,8 @@ The yaml CloudFormation files deploy the architecture for you. A reference pictu
 Consider that, due to limitation in AWS Elastic IP number (5 per account per region) it won't be possible to launch the templates 
 if someone else already deployed it.  
 Please check if any stack is already deployed before attampting to create them. 
-The files have to be used in sequence to create the stacks, because they depend on each other:  
+The files have to be used in sequence to create the stacks, because they depend on each other.  
+Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
 1. Picnic-VPC-broken.yaml
 2. Picnic-NAT-Gateways-broken.yaml  
 3. Picnic-NACLS-broken.yaml
