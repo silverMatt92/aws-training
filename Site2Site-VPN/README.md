@@ -14,4 +14,4 @@ The demo consists of 5 stages, each implementing additional components of the ar
 
 ## Instructions
 
-- [Stage1 - Create Site2Site VPN]
+- Stage1 - Create Site2Site VPN
