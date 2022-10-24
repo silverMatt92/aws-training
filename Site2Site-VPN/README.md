@@ -1,6 +1,6 @@
 # Site2Site VPN Simple architecture with Virtual Private Gateway
 
-![Architecture](https://github.com/silverMatt92/aws-training/raw/master/Site2Site-VPN/VPN-architecture.png)
+![Architecture](https://github.com/silverMatt92/aws-training/raw/master/Site2Site-VPN/VPN-architecture-fix.png)
 
 In this project you will implement a site to site VPN between AWS and a simulated on-premises business site running strongswan router/NAT.
 
