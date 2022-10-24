@@ -454,14 +454,6 @@ Resources:
         - !Ref onpremSG
       ServiceName: !Sub com.amazonaws.${AWS::Region}.ssmmessages
       VpcId: !Ref onpremVPC
-  onpremRouterEIP:
-    Type: AWS::EC2::EIP
-    DependsOn: onpremIGWAttachment
-  onpremRouterEIPAssociation:
-    Type: AWS::EC2::EIPAssociation
-    Properties:
-      AllocationId: !GetAtt onpremRouterEIP.AllocationId
-      NetworkInterfaceId: !GetAtt onpremENIRouterPublic.Id
   onpremServer:
     Type: AWS::EC2::Instance
     DependsOn: 
