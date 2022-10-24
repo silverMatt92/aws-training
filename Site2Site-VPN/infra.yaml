@@ -459,49 +459,6 @@ Resources:
     Properties:
       AllocationId: !GetAtt onpremRouterEIP.AllocationId
       NetworkInterfaceId: !GetAtt onpremENIRouterPublic.Id
-  onpremRouter:
-    Type: AWS::EC2::Instance
-    DependsOn: 
-      - onpremVPCeSSM
-      - onpremVPCeSSMEC2Messages
-      - onpremVPCeSSMMessages
-    Properties:
-      NetworkInterfaces:
-      - NetworkInterfaceId: !Ref onpremENIRouterPublic
-        DeviceIndex: 0
-      - NetworkInterfaceId: !Ref onpremENIRouterPrivate
-        DeviceIndex: 1
-      AvailabilityZone: !Select [ 0, !GetAZs '' ]
-      InstanceType: "t3.small"
-      ImageId: !Ref pfSenseAmiId
-      IamInstanceProfile: !Ref onpremEC2InstanceProfile
-      Tags:
-        - Key: Name
-          Value: onpremRouter
-  onpremENIRouterPrivate:
-    Type: AWS::EC2::NetworkInterface
-    Properties:
-      SubnetId: !Ref onpremSnPrivate
-      Description: onpremRouter PRIVATE INTERFACE
-      GroupSet: 
-      - !Ref onpremRouterSG
-      SourceDestCheck: false
-      Tags:
-        -
-          Key: Name
-          Value: onpremRouter Private ENI
-  onpremENIRouterPublic:
-    Type: AWS::EC2::NetworkInterface
-    Properties:
-      SubnetId: !Ref onpremSnPublic
-      Description: Router1 PUBLIC INTERFACE
-      GroupSet: 
-      - !Ref onpremRouterSG
-      SourceDestCheck: false
-      Tags:
-        -
-          Key: Name
-          Value: onpremRouter Public ENI
   onpremServer:
     Type: AWS::EC2::Instance
     DependsOn: 
