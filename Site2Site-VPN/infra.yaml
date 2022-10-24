@@ -484,7 +484,3 @@ Resources:
         -
           Key: Name
           Value: onpremServer Private ENI
-Outputs:
-  onpremRouterIP:
-    Description: Public IPv4 Address for on-premises router
-    Value: !Ref onpremRouterEIP
