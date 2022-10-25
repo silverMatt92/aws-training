@@ -1,6 +1,6 @@
 # Site2Site VPN Simple architecture with Virtual Private Gateway
 
-![Architecture](https://github.com/silverMatt92/aws-training/raw/master/Site2Site-VPN/VPN-architecture-fix.png)
+![Architecture](https://github.com/silverMatt92/aws-training/raw/master/Site2Site-VPN/VPN-architecture-fixed.png)
 
 In this project you will implement a site to site VPN between AWS and a simulated on-premises business site.  
 The Cloudformation yaml file provides the basic skeleton but the Site2Site VPN and the on-prem router configuration has to be done from scratch.
