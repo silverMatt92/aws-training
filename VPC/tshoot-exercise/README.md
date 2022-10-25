@@ -1,4 +1,7 @@
 # Troubleshooting exercise
+
+![Architecture](https://github.com/silverMatt92/aws-training/raw/master/VPC/tshoot-exercise/tshoot-exercise.png)
+
 This is a troubleshooting exercise to test your basic VPC skills.  
 Skills required:  
 - VPC subnetting;  
