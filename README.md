@@ -1,3 +1,3 @@
 # aws-training
-AWS Training repo for Picnic.
-Contains CF yaml files to create resources.
+
+This repo contains a collection of training materials for AWS networking training in Picnic.  
