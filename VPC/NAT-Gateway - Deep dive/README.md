@@ -6,7 +6,7 @@ NAT-GW or directly via the Internet Gateway.
 
 # Packet walk
 
-![Architecture](https://github.com/silverMatt92/aws-training/raw/master/VPC/NAT-Gateway - Deep dive/NAT-GW-drawing.png)
+![Architecture](https://github.com/silverMatt92/aws-training/raw/master/VPC/NAT-Gateway\ -\ Deep\ dive/NAT-GW-drawing.png)
 
 Imagining a TCP communication between the private clients (using the same TCP source port) depicted and a public
 server, listening on port 8080, here's the detailed packet walk:
