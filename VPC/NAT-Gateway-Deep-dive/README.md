@@ -35,3 +35,6 @@ server, listening on port 8080, here's the detailed packet walk:
    based on the main VPC route table, routes the packets locally;
 8. Packets gets translated back by the NAT-GW, based on its translation table
    and get routed locally to reach back the clients.
+
+
+![Architecture](https://github.com/silverMatt92/aws-training/raw/master/VPC/NAT-Gateway-Deep-dive/clients-server.png)
