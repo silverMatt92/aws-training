@@ -1,0 +1,197 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description:  This template is intended to build the router instance with strongswan, to be used as simulated on-prem router for Site2Site VPN lab.
+Parameters:
+  RouterAmiId:
+    Description: AMI for the Router Instances (don't change)
+    Type: 'String'
+    Default: 'ami-0ac80df6eff0e70b5'
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: "Name of an existing SSH Keypair to access the instance"
+Resources:
+  RouterEIP:
+    Type: AWS::EC2::EIP
+  RouterEIPAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId: !GetAtt RouterEIP.AllocationId
+      NetworkInterfaceId: !GetAtt ONPREMENIPUBLIC.Id
+  OnPremRouter:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: !Ref KeyName
+      InstanceType: "t3.small"
+      ImageId: !Ref RouterAmiId
+      IamInstanceProfile: !Ref SessionManagerInstanceProfile
+      NetworkInterfaces:
+      - NetworkInterfaceId: !Ref ONPREMENIPUBLIC
+        DeviceIndex: 0
+      - NetworkInterfaceId: !Ref ONPREMENIPRIVATE
+        DeviceIndex: 1
+      SubnetId: !ImportValue onpremSnPublic
+      SecurityGroupIds: 
+        - !Ref ONPREMInstanceSG
+      Tags:
+        - Key: Name
+          Value: OnPrem-Router
+      UserData: 
+        Fn::Base64: 
+          !Sub |
+            #!/bin/bash -xe
+            apt-get update && apt-get install -y strongswan wget
+            mkdir /home/ubuntu/demo_assets
+            cd /home/ubuntu/demo_assets
+            wget https://raw.githubusercontent.com/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ipsec-vti.sh
+            wget https://raw.githubusercontent.com/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ipsec.conf
+            wget https://raw.githubusercontent.com/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ipsec.secrets
+            wget https://raw.githubusercontent.com/aws-training/tree/master/Site2Site-VPN/OnPremRouter/51-eth1.yaml
+            wget https://raw.githubusercontent.com/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ffrouting-install.sh
+            chown ubuntu:ubuntu /home/ubuntu/demo_assets -R
+            cp /home/ubuntu/demo_assets/51-eth1.yaml /etc/netplan
+            netplan --debug apply 
+  ONPREMENIPRIVATE:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      SubnetId: !ImportValue onpremSnPrivate
+      Description: Router PRIVATE INTERFACE
+      GroupSet: 
+      - !Ref ONPREMInstanceSG
+      SourceDestCheck: false
+      Tags:
+        -
+          Key: Name
+          Value: ONPREM-R-PRIVATE
+  ONPREMENIPUBLIC:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      SubnetId: !ImportValue onpremSnPublic
+      Description: Router PUBLIC INTERFACE
+      GroupSet: 
+      - !Ref ONPREMInstanceSG
+      SourceDestCheck: false
+      Tags:
+        -
+          Key: Name
+          Value: ONPREM-R-PUBLIC
+  ONPREMInstanceSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      VpcId: !ImportValue onpremVPC
+      GroupDescription: Default ONPREM SG
+      SecurityGroupIngress: 
+        - Description: 'Allow All from AWS Environment'
+          IpProtocol: '-1'
+          CidrIp: '10.16.0.0/16'
+  ONPREMInstanceSGSelfReferenceRule:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Properties:
+      GroupId: !Ref ONPREMInstanceSG
+      IpProtocol: '-1'
+      SourceSecurityGroupId: !Ref ONPREMInstanceSG
+  SessionManagerRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+              - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - 'ssm:DescribeAssociation'
+                  - 'ssm:GetDeployablePatchSnapshotForInstance'
+                  - 'ssm:GetDocument'
+                  - 'ssm:DescribeDocument'
+                  - 'ssm:GetManifest'
+                  - 'ssm:GetParameter'
+                  - 'ssm:GetParameters'
+                  - 'ssm:ListAssociations'
+                  - 'ssm:ListInstanceAssociations'
+                  - 'ssm:PutInventory'
+                  - 'ssm:PutComplianceItems'
+                  - 'ssm:PutConfigurePackageResult'
+                  - 'ssm:UpdateAssociationStatus'
+                  - 'ssm:UpdateInstanceAssociationStatus'
+                  - 'ssm:UpdateInstanceInformation'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 'ssmmessages:CreateControlChannel'
+                  - 'ssmmessages:CreateDataChannel'
+                  - 'ssmmessages:OpenControlChannel'
+                  - 'ssmmessages:OpenDataChannel' 
+                Resource: '*'
+              - Effect: Allow
+                Action: 
+                  - 'ec2messages:AcknowledgeMessage'
+                  - 'ec2messages:DeleteMessage'
+                  - 'ec2messages:FailMessage'
+                  - 'ec2messages:GetEndpoint'
+                  - 'ec2messages:GetMessages'
+                  - 'ec2messages:SendReply'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:*"
+                  - "cloudformation:CreateChangeSet"
+                  - "cloudformation:DescribeChangeSet"
+                  - "cloudformation:DescribeStackResource"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:ExecuteChangeSet"
+                  - "ec2:DescribeSecurityGroups"
+                  - "ec2:DescribeSubnets"
+                  - "ec2:DescribeVpcs"
+                  - "kms:DescribeKey"
+                  - "kms:ListAliases"
+                  - "kms:ListKeys"
+                  - "lambda:ListFunctions"
+                  - "rds:DescribeDBClusters"
+                  - "rds:DescribeDBInstances"
+                  - "redshift:DescribeClusters"
+                  - "tag:GetResources"
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - "lambda:AddPermission"
+                  - "lambda:CreateFunction"
+                  - "lambda:GetFunction"
+                  - "lambda:InvokeFunction"
+                  - "lambda:UpdateFunctionConfiguration"
+                Resource: 'arn:aws:lambda:*:*:function:SecretsManager*'
+              - Effect: Allow
+                Action: 
+                  - "serverlessrepo:CreateCloudFormationChangeSet"
+                  - "serverlessrepo:GetApplication"
+                Resource: "arn:aws:serverlessrepo:*:*:applications/SecretsManager*"
+              - Effect: Allow
+                Action: 
+                  - "s3:GetObject"
+                Resource: "arn:aws:s3:::awsserverlessrepo-changesets*"
+              - Effect: Allow
+                Action:
+                  - "s3:GetObject"
+                Resource: "arn:aws:s3:::secrets-manager-rotation-apps-*/*"  
+  SessionManagerInstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Path: /
+      Roles:
+        - !Ref SessionManagerRole
+  Outputs:
+    RouterPublic:
+      Description: Public IP of the router
+      Value: !GetAtt OnPremRouter.PublicIp
+    RouterPrivate:
+      Description: Private IP of the router
+      Value: !GetAtt OnPremRouter.PrivateIp
