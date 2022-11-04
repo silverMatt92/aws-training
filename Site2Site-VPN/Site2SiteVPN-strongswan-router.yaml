@@ -188,10 +188,10 @@ Resources:
       Path: /
       Roles:
         - !Ref SessionManagerRole
-  Outputs:
-    RouterPublic:
-      Description: Public IP of the router
-      Value: !GetAtt OnPremRouter.PublicIp
-    RouterPrivate:
-      Description: Private IP of the router
-      Value: !GetAtt OnPremRouter.PrivateIp
+Outputs:
+  RouterPublic:
+    Description: Public IP of the router
+    Value: !GetAtt OnPremRouter.PublicIp
+  RouterPrivate:
+    Description: Private IP of the router
+    Value: !GetAtt OnPremRouter.PrivateIp
