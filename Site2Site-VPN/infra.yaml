@@ -488,9 +488,15 @@ Outputs:
   onpremVPC:
     Description: OnPrem VPC ID
     Value: !Ref onpremVPC
+    Export:
+      Name: onpremVPC
   onpremSnPublic:
     Description: OnPrem public subnet ID
     Value: !Ref onpremSnPublic
+    Export: 
+      Name: onpremSnPublic
   onpremSnPrivate:
     Description: OnPrem private subnet ID
     Value: !Ref onpremSnPrivate
+    Export:
+      Name: onpremSnPrivate
