@@ -29,7 +29,6 @@ Resources:
         DeviceIndex: 0
       - NetworkInterfaceId: !Ref ONPREMENIPRIVATE
         DeviceIndex: 1
-      SubnetId: !ImportValue onpremSnPublic
       SecurityGroupIds: 
         - !Ref ONPREMInstanceSG
       Tags:
