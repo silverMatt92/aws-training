@@ -484,3 +484,13 @@ Resources:
         -
           Key: Name
           Value: onpremServer Private ENI
+Outputs:
+  onpremVPC:
+    Description: OnPrem VPC ID
+    Value: !Ref onpremVPC
+  onpremSnPublic:
+    Description: OnPrem public subnet ID
+    Value: !Ref onpremSnPublic
+  onpremSnPrivate:
+    Description: OnPrem private subnet ID
+    Value: !Ref onpremSnPrivate
