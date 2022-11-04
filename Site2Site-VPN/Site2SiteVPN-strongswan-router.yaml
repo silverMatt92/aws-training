@@ -42,11 +42,11 @@ Resources:
             apt-get update && apt-get install -y strongswan wget
             mkdir /home/ubuntu/demo_assets
             cd /home/ubuntu/demo_assets
-            wget https://raw.githubusercontent.com/silverMatt92/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ipsec-vti.sh
-            wget https://raw.githubusercontent.com/silverMatt92/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ipsec.conf
-            wget https://raw.githubusercontent.com/silverMatt92/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ipsec.secrets
-            wget https://raw.githubusercontent.com/silverMatt92/aws-training/tree/master/Site2Site-VPN/OnPremRouter/51-eth1.yaml
-            wget https://raw.githubusercontent.com/silverMatt92/aws-training/tree/master/Site2Site-VPN/OnPremRouter/ffrouting-install.sh
+            wget https://raw.githubusercontent.com/silverMatt92/aws-training/master/Site2Site-VPN/OnPremRouter/ipsec-vti.sh
+            wget https://raw.githubusercontent.com/silverMatt92/aws-training/master/Site2Site-VPN/OnPremRouter/ipsec.conf
+            wget https://raw.githubusercontent.com/silverMatt92/aws-training/master/Site2Site-VPN/OnPremRouter/ipsec.secrets
+            wget https://raw.githubusercontent.com/silverMatt92/aws-training/master/Site2Site-VPN/OnPremRouter/51-eth1.yaml
+            wget https://raw.githubusercontent.com/silverMatt92/aws-training/master/Site2Site-VPN/OnPremRouter/ffrouting-install.sh
             chown ubuntu:ubuntu /home/ubuntu/demo_assets -R
             cp /home/ubuntu/demo_assets/51-eth1.yaml /etc/netplan
             netplan --debug apply 
