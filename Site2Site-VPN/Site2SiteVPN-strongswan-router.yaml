@@ -29,8 +29,6 @@ Resources:
         DeviceIndex: 0
       - NetworkInterfaceId: !Ref ONPREMENIPRIVATE
         DeviceIndex: 1
-      SecurityGroupIds: 
-        - !Ref ONPREMInstanceSG
       Tags:
         - Key: Name
           Value: OnPrem-Router
