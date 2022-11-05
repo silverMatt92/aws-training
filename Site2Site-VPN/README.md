@@ -32,7 +32,7 @@ two private EC2 machines: AWS server and on-prem server.
 Connect to your Ubuntu EC2 using AWS Session Manager, change into root user and
 cd into the /home/ubuntu/demo-assets/ directory.
 
-`sudo bash`
+`sudo bash`  
 `cd /home/ubuntu/demo_assets/`
 
 The IPsec configuation file to be edited is ipsec.conf, as well as the
@@ -42,7 +42,8 @@ that will bring UP the tunnel interfaces when needed.
 This is the file ipsec-vti.sh, that needs to be modified as per AWS VPN
 configuration downloaded.  
 
-Once the files have been modified correctly, copy them into the /etc folder and make the shell script executable with 
+Once the files have been modified correctly, copy them into the /etc folder and make the shell script executable with  
+
 `chmod +x /etc/ipsec-vti.sh`
 
 Now all the configuration for IPsec has been completed, lets restart the strongSwan service to bring them up.
@@ -56,33 +57,34 @@ You can also check the connection in the AWS VPC Console ...the tunnels should b
 
 Now, in the same folder /home/ubuntu/demo_assets/, you have the shell script
 that will install FRR, just make it executable and run it:  
-`chmod +x ffrouting-install.sh`
-`./ffrouting-install.sh`
+
+`chmod +x ffrouting-install.sh`  
+`./ffrouting-install.sh`  
 ** This will take some time - 10-15 minutes **
 
-Once completed, you should be able to access the FRR terminal via 
+Once completed, you should be able to access the FRR terminal via  
 `vtysh`
 
-And from there, configure the BGP session and prefix advertisements:
-`conf t`
-`frr defaults traditional`
-`router bgp <AS-NUMBER>`
-`neighbor AWS_TUNNEL_IP_1 remote-as <AWS-AS-NUMBER>`
-`neighbor AWS_TUNNEL_IP_2 remote-as <AWS-AS-NUMBER>`
-`no bgp ebgp-requires-policy`
-`address-family ipv4 unicast`
-`redistribute connected`
-`exit-address-family`
-`exit`
-`exit`
-`wr`
-`exit`
-
-`sudo reboot`
+And from there, configure the BGP session and prefix advertisements:  
+`conf t`  
+`frr defaults traditional`  
+`router bgp <AS-NUMBER>`  
+`neighbor AWS_TUNNEL_IP_1 remote-as <AWS-AS-NUMBER>`  
+`neighbor AWS_TUNNEL_IP_2 remote-as <AWS-AS-NUMBER>`  
+`no bgp ebgp-requires-policy`  
+`address-family ipv4 unicast`  
+`redistribute connected`  
+`exit-address-family`  
+`exit`  
+`exit`  
+`wr`  
+`exit`  
+  
+`sudo reboot`  
 
 Once back, the linux router  will now be functioning as both an IPsec endpoint and BGP endpoint. 
 It will be exchanging routes with the virtual private gateway in AWS.  
 
-You can check the routes received with the commands:
-vtysh`
-`show ip route`
+You can check the routes received with the commands:  
+`vtysh`  
+`show ip route`  
