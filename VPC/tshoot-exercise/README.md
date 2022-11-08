@@ -24,16 +24,22 @@ ssh -i aws-training-picnic.pem <private-ip-ec2>
 
 # Usage
 The yaml CloudFormation files deploy the architecture for you. A reference picture is provided. Use it in us-east-1 region.  
-Consider that, due to limitation in AWS Elastic IP number (5 per account per region) it won't be possible to launch the templates 
-if someone else already deployed it.  
-Please check if any stack is already deployed before attampting to create them. 
-The files have to be used in sequence to create the stacks, because they depend on each other.  
-Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
+Open the CloudFormation console in AWS, in us-east-1 region, then:
+- Create stack  
+- Under "Specify template", select "Upload a template file"  
+- Choose the yaml file and wait until it says CREATE COMPLETE    
+This same process has to be repeated for each yaml file in the following sequence, because each one depends on the succseful deployment of the previous:  
 1. Picnic-VPC-broken.yaml
 2. Picnic-NAT-Gateways-broken.yaml  
 3. Picnic-NACLS-broken.yaml
 4. Picnic-BastionHost.yaml  
 5. Picnic-EC2-broken.yaml  
+
+Consider that, due to limitation in AWS Elastic IP number (5 per account per region) it won't be possible to launch the templates 
+if someone else already deployed it.  
+Please check if any stack is already deployed before attampting to create them. 
+The files have to be used in sequence to create the stacks, because they depend on each other.  
+Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
 
 Please don't read the files otherwise you could understand what's broken in the architecture.  
 Once done, remember to delete the stacks in the opposite order w/r of their creation, to avoid paying for something you don't use.
