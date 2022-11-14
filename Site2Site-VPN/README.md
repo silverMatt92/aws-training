@@ -1,4 +1,4 @@
-# Site2Site VPN Simple architecture with Virtual Private Gateway
+# Site2Site VPN Simple architecture with Virtual Private Gateway (slightly broken)
 
 ![Architecture](https://github.com/silverMatt92/aws-training/raw/master/Site2Site-VPN/VPN-architecture-fixed.png)
 
@@ -88,3 +88,6 @@ It will be exchanging routes with the virtual private gateway in AWS.
 You can check the routes received with the commands:  
 `vtysh`  
 `show ip route`  
+
+The final goal of the lab is to connect bidirectionally between the instances in the connected VPCs via their private IP addresses.  
+Unfortunately, the lab is slighly broken, find the problem(s) and solve it!
