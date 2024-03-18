@@ -41,6 +41,6 @@ The SSO session associated with this profile has expired or is otherwise invalid
 ```
 You can refresh your token by running the command:
 ```
-aws sso login --profile Picnic-CorpIT
+aws sso login --profile picnic-corpit
 ```
 This will redirect to your browser where you will need to re-authenticate via SSO
