@@ -35,8 +35,12 @@ This same process has to be repeated for each yaml file in the following sequenc
 4. Picnic-BastionHost.yaml  
 5. Picnic-EC2-broken.yaml  
 
-PLEASE, the lab is currently only deployable in us-east-1 (N.Virginia), so have a look at CloudFormation page before even deploying it, to avoid another
-person using it to be conflicting with you.  
+Currently, the lab can be deployed in the following regions:  
+- us-east-1 N.Virginia
+- eu-central-1 Frankfurt
+- eu-west-3 Paris
+- eu-west-2 London
+- sa-east-1 Sao Paolo
 The files have to be used in sequence to create the stacks, because they depend on each other.  
 Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
 
