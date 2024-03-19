@@ -35,9 +35,9 @@ This same process has to be repeated for each yaml file in the following sequenc
 4. Picnic-BastionHost.yaml  
 5. Picnic-EC2-broken.yaml  
 
-Consider that, due to limitation in AWS Elastic IP number (5 per account per region) it won't be possible to launch the templates 
-if someone else already deployed it.  
-Please check if any stack is already deployed before attampting to create them. 
+Consider that, by default, the Elastic IP quota in AWS is currently 5 IPs per account per region.  
+In our CorpIT account this limit has been increased to 20, so potentially, it would be possible to deploy 5 of these labs in different regions, 
+so up until 5 users could deploy the same in different regions.  
 The files have to be used in sequence to create the stacks, because they depend on each other.  
 Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
 
