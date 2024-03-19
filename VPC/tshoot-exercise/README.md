@@ -40,7 +40,7 @@ Currently, the lab can be deployed in the following regions:
 - eu-central-1 Frankfurt
 - eu-west-3 Paris
 - eu-west-2 London
-- sa-east-1 Sao Paolo
+- sa-east-1 Sao Paolo  
 The files have to be used in sequence to create the stacks, because they depend on each other.  
 Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
 
