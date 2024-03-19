@@ -35,9 +35,8 @@ This same process has to be repeated for each yaml file in the following sequenc
 4. Picnic-BastionHost.yaml  
 5. Picnic-EC2-broken.yaml  
 
-Consider that, by default, the Elastic IP quota in AWS is currently 5 IPs per account per region.  
-In our CorpIT account this limit has been increased to 20, so potentially, it would be possible to deploy 5 of these labs in different regions, 
-so up until 5 users could deploy the same in different regions (DO NOT CHOOSE Ireland eu-west-1 because we already have our production deployment there).  
+PLEASE, the lab is currently only deployable in us-east-1 (N.Virginia), so have a look at CloudFormation page before even deploying it, to avoid another
+person using it to be conflicting with you.  
 The files have to be used in sequence to create the stacks, because they depend on each other.  
 Whenever it asks to provide the key-pair to use, please select the "aws-training-picnic" one.    
 
